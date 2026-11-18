@@ -728,3 +728,31 @@ p.with-ic { display: flex; }
 .privacy { margin-top: 18px; padding: 10px 14px; background: #fff; border: 2px dashed var(--ink); border-radius: 14px; }
 .privacy summary { cursor: pointer; font-weight: 800; }
 .btn.danger { color: #8f1d34; border-color: #8f1d34; background: #ffe1e8; }
+
+/* ---------- copyright footer ---------- */
+.site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  padding: 8px 12px 10px;
+  text-align: center;
+  pointer-events: none;           
+}
+.credit {
+  pointer-events: auto;
+  display: inline-block;
+  padding: 3px 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--pink-dark);
+  text-decoration: none;
+  background: rgba(255, 250, 243, 0.92);
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+}
+.credit:hover { text-decoration: underline; text-underline-offset: 3px; }
+.screen { padding-bottom: 64px; }  
+body[data-screen="room"] .site-footer { display: none; }
+.menu-credit { align-self: center; margin-top: 10px; }
