@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pomodoodle: a cosy study room with friends</title>
+  <meta name="description" content="Pick a doodle study buddy, set a pomodoro timer and study together in a cosy full-screen room. Lo-fi music, streaks and achievements included.">
+  <meta name="theme-color" content="#ffd9e6">
+  <link rel="icon" href="icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@500;600&family=Nunito:wght@500;600;700;800&display=swap">
+  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="scene.css">
+</head>
+<body data-screen="welcome">
+  <!-- hand-drawn line icons -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6.5" cy="10" r="2"/><circle cx="10" cy="5.8" r="2"/><circle cx="14.5" cy="5.8" r="2"/><circle cx="18" cy="10" r="2"/><path d="M7.5 17.5c0-3.2 2.2-6 4.7-6s4.6 2.8 4.6 6c0 2.2-2.3 2.6-4.6 1.8-2.4.8-4.7.4-4.7-1.8z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4.2l2.8 1.8M9.8 3.2h4.4M12 3.2V6"/></symbol>
+    <symbol id="i-friends" viewBox="0 0 24 24"><circle cx="8.5" cy="8" r="3.2"/><circle cx="16.5" cy="9" r="2.6"/><path d="M2.8 20c.2-4 2.6-6.3 5.7-6.3s5.5 2.3 5.7 6.3M15 14.3c3.3-.4 6 1.6 6.2 5.4"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4.5 15v-3.3a7.5 7.5 0 0 1 15 0V15"/><rect x="3" y="13.5" width="4.3" height="6.8" rx="1.8"/><rect x="16.7" y="13.5" width="4.3" height="6.8" rx="1.8"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7.2 3.8h9.6v4.8a4.8 4.8 0 0 1-9.6 0z"/><path d="M7.2 5.8H4.3c0 2.8 1.4 4.3 3.4 4.4M16.8 5.8h2.9c0 2.8-1.4 4.3-3.4 4.4M12 13.4v3.4M8.8 20.3h6.4M9.6 16.8h4.8v3.5H9.6z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5.8" width="18" height="13" rx="2.2"/><path d="M3.6 7.4 12 13.4l8.4-6"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3.2c.6 3.6 5.8 5.6 5.8 10.6a5.8 5.8 0 0 1-11.6 0c0-2.8 1.8-3.9 2-5.8 1.4.9 1.9 2 1.9 3 1.4-2 2.2-4.5 1.9-7.8z"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.8 11.2 12 4.2l8.2 7"/><path d="M6.2 9.6v10.2h11.6V9.6M10 19.8v-4.6h4v4.6"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15.5" r="4"/><path d="m10.9 12.6 8.4-8.4M16 7.4l2.3 2.3M13.8 9.6l2 2"/></symbol>
+    <symbol id="i-me" viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.8"/><path d="M4.5 20.5c.3-4.3 3.4-6.8 7.5-6.8s7.2 2.5 7.5 6.8"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6.6" y="5" width="3.8" height="14" rx="1.6"/><rect x="13.6" y="5" width="3.8" height="14" rx="1.6"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19.2C4.6 10.4 10.2 5 19.6 4.6c.4 9.2-5 14.8-14.6 14.6z"/><path d="m5 19.2 8.4-8.4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M3.8 5.4c3-1.1 5.9-.9 8.2 1.1 2.3-2 5.2-2.2 8.2-1.1v13.4c-3-1.1-5.9-.9-8.2 1.1-2.3-2-5.2-2.2-8.2-1.1z"/><path d="M12 6.5v13.4"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9.2 17.6h5.6M10.2 20.6h3.6"/><path d="M12 3.2a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.6v.6h5.6v-.6c0-.6.3-1.2.8-1.6A6 6 0 0 0 12 3.2z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3.5 20.2h17"/><rect x="5.5" y="12.5" width="3.4" height="7.7" rx="1"/><rect x="10.3" y="7" width="3.4" height="13.2" rx="1"/><rect x="15.1" y="10" width="3.4" height="10.2" rx="1"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9.5M18 7h2M4 17h3.5M12 17h8"/><circle cx="15.7" cy="7" r="2.2"/><circle cx="9.7" cy="17" r="2.2"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 17.6V6.2l10-2.2v11.4"/><circle cx="6.8" cy="17.8" r="2.3"/><circle cx="16.8" cy="15.6" r="2.3"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.6" width="14" height="10" rx="2.4"/><path d="M8.2 10.6V7.8a3.8 3.8 0 0 1 7.6 0v2.8M12 14.6v2"/></symbol>
+    <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M12 20.8v-8.6"/><path d="M12 12.2C12 8.3 9.2 6 5 6c0 4 2.8 6.2 7 6.2zM12 10.4c0-3.2 2.4-5.4 6.4-5.4 0 3.4-2.4 5.4-6.4 5.4z"/></symbol>
+    <symbol id="i-crown" viewBox="0 0 24 24"><path d="m4.2 17.6-1.1-9.8 5 3.9L12 4.8l3.9 6.9 5-3.9-1.1 9.8z"/><path d="M5 20.6h14"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.2 2.6 5.5 6 .8-4.4 4.1 1.1 6L12 16.7l-5.3 2.9 1.1-6-4.4-4.1 6-.8z"/></symbol>
+    <symbol id="i-flower" viewBox="0 0 24 24"><circle cx="12" cy="6.8" r="2.9"/><circle cx="17" cy="10.5" r="2.9"/><circle cx="15.1" cy="16.4" r="2.9"/><circle cx="8.9" cy="16.4" r="2.9"/><circle cx="7" cy="10.5" r="2.9"/><circle cx="12" cy="12" r="1.7"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.8 14.6A8 8 0 1 1 9.4 4.2a6.4 6.4 0 0 0 10.4 10.4z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4 6.9 6.9M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/></symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24"><path d="M8 3.2h8l-2.3 6.4h-3.4z"/><circle cx="12" cy="15" r="5.4"/><path d="m12 12.4.9 1.8 1.9.2-1.4 1.3.4 1.9-1.8-1-1.8 1 .4-1.9-1.4-1.3 1.9-.2z"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.2s-7.4-4.6-7.4-10.3A4 4 0 0 1 12 7.6a4 4 0 0 1 7.4 2.3c0 5.7-7.4 10.3-7.4 10.3z"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3.2s6.2 6.6 6.2 11.2a6.2 6.2 0 0 1-12.4 0C5.8 9.8 12 3.2 12 3.2z"/><path d="M9.2 14.6a2.8 2.8 0 0 0 2.4 2.6"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7 14.6a3.9 3.9 0 0 1 .3-7.8 5 5 0 0 1 9.6 1.6 3.1 3.1 0 0 1 0 6.2z"/><path d="m8.4 17.6-1 2.4M12.4 17.6l-1 2.4M16.4 17.6l-1 2.4"/></symbol>
+    <symbol id="i-waves" viewBox="0 0 24 24"><path d="M3 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0M3 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><rect x="3.2" y="8" width="17.6" height="11.6" rx="2.4"/><path d="m7 8 9-4.6"/><circle cx="15.6" cy="13.8" r="2.8"/><path d="M6.6 12h3.6M6.6 15.6h3.6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1.2"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.6a4.2 4.2 0 0 1-.4-8.4 5.4 5.4 0 0 1 10.4 1.4 3.5 3.5 0 0 1 .4 7z"/><path d="m9.4 14.2 1.9 1.9 3.5-3.6"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><path d="M6 20.6V4.8a1.4 1.4 0 0 1 1.4-1.4h9.2A1.4 1.4 0 0 1 18 4.8v15.8M3.8 20.6h16.4"/><circle cx="14.6" cy="12.4" r="0.9"/></symbol>
+  </svg>
+
+  <!-- the ☰ menu button lives on every screen -->
+  <button id="menu-btn" class="icon-btn menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+    <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+
+  <!-- ===================== 1. GREETING ===================== -->
+  <main id="screen-welcome" class="screen welcome-screen" aria-labelledby="welcome-title">
+    <div class="hero card">
+      <p class="kicker">✦ a cosy little study room ✦</p>
+      <h1 id="welcome-title" class="logo">Pomodoodle</h1>
+      <p class="tagline">Pick a doodle buddy, set your timer and study side by side with friends.</p>
+      <div id="parade" class="parade" aria-hidden="true"></div>
+      <p id="welcome-back" class="welcome-back" hidden></p>
+      <p id="invite-note" class="invite-note" hidden></p>
+      <button id="start" class="btn btn-big" type="button">Start ✦</button>
+      <p id="acc-line" class="acc-line" hidden></p>
+      <ul class="features">
+        <li><svg class="ic" aria-hidden="true"><use href="#i-paw"/></svg> Six doodle buddies</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> Pomodoro timer</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-friends"/></svg> Study rooms with friends</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-headphones"/></svg> Lo-fi, rain &amp; waves</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-trophy"/></svg> Streaks &amp; achievements</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- ===================== 2. MY BUDDY ===================== -->
+  <main id="screen-buddy" class="screen setup-screen" aria-labelledby="buddy-title" hidden>
+    <div class="step-head">
+      <span class="step">Step 1 of 2</span>
+      <h1 id="buddy-title">Make your study buddy</h1>
+    </div>
+    <div class="card" id="buddy-home">
+      <!-- the buddy editor sits here, and moves into the menu when you're in the room -->
+      <div id="pet-editor" class="pet-editor">
+        <canvas id="big-preview" width="150" height="150" role="img" aria-label="Preview of your study buddy"></canvas>
+        <div class="pet-fields">
+          <label for="name" class="field-label">Your name</label>
+          <input id="name" maxlength="20" placeholder="e.g. Asha" autocomplete="off">
+
+          <p class="field-label">Animal</p>
+          <div id="types" class="avatars" role="radiogroup" aria-label="Animal"></div>
+
+          <p class="field-label">Colour</p>
+          <div id="colors" class="choices swatches" role="radiogroup" aria-label="Colour"></div>
+          <div class="row color-row">
+            <label for="custom-color" class="picker-label">
+              <input id="custom-color" type="color" value="#ff6b81">
+              Pick any colour
+            </label>
+            <button id="reset-color" class="btn btn-soft btn-small" type="button">Original colour</button>
+          </div>
+
+          <p class="field-label">Decoration</p>
+          <div id="hats" class="choices" role="radiogroup" aria-label="Decoration"></div>
+          <p class="small with-ic"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg> Some decorations unlock with achievements.</p>
+
+          <button id="pet-save" class="btn" type="button">Save my buddy</button>
+          <p id="pet-msg" class="small" role="status"></p>
+        </div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button id="buddy-back" class="btn btn-soft" type="button">← Back</button>
+      <button id="buddy-next" class="btn" type="button">Next →</button>
+    </div>
+  </main>
+
+  <!-- ===================== 3. TIMER SETUP ===================== -->
+  <main id="screen-timer" class="screen setup-screen" aria-labelledby="timer-title" hidden>
+    <div class="step-head">
+      <span class="step">Step 2 of 2</span>
+      <h1 id="timer-title">Set your study timer</h1>
+    </div>
+    <div class="card setup-card">
+      <canvas id="setup-buddy" width="150" height="150" aria-hidden="true"></canvas>
+
+      <p class="field-label" id="len-label">How long?</p>
+      <div id="presets" class="presets" role="radiogroup" aria-labelledby="len-label">
+        <button type="button" class="preset" role="radio" data-focus="25" data-break="5"><strong>Classic</strong><span>25 min focus · 5 min rest</span></button>
+        <button type="button" class="preset" role="radio" data-focus="50" data-break="10"><strong>Deep work</strong><span>50 min focus · 10 min rest</span></button>
+        <button type="button" class="preset" role="radio" data-focus="15" data-break="3"><strong>Quick sprint</strong><span>15 min focus · 3 min rest</span></button>
+        <button type="button" class="preset" role="radio" data-custom="1"><strong>My own</strong><span>choose the minutes</span></button>
+      </div>
+      <div id="custom-lengths" class="lengths" hidden>
+        <label>Focus <span class="small">(minutes)</span><input id="setup-focus" type="number" min="1" max="180" step="1" value="25"></label>
+        <label>Rest <span class="small">(minutes)</span><input id="setup-break" type="number" min="1" max="60" step="1" value="5"></label>
+      </div>
+
+      <p class="field-label" id="mode-label">Who's studying?</p>
+      <div id="modes" class="modes" role="radiogroup" aria-labelledby="mode-label">
+        <button type="button" class="mode" role="radio" data-mode="solo"><svg class="ic ic-big" aria-hidden="true"><use href="#i-me"/></svg><strong>Just me</strong></button>
+        <button type="button" class="mode" role="radio" data-mode="create"><svg class="ic ic-big" aria-hidden="true"><use href="#i-home"/></svg><strong>New room</strong></button>
+        <button type="button" class="mode" role="radio" data-mode="join"><svg class="ic ic-big" aria-hidden="true"><use href="#i-key"/></svg><strong>Join a room</strong></button>
+      </div>
+      <div id="join-box" class="join-box" hidden>
+        <label for="setup-code" class="field-label">Room code</label>
+        <input id="setup-code" maxlength="6" placeholder="e.g. K7PQ2M" autocomplete="off" spellcheck="false">
+      </div>
+      <p id="mode-note" class="small mode-note"></p>
+      <p id="setup-error" class="error" role="alert" hidden></p>
+    </div>
+    <div class="nav-row">
+      <button id="timer-back" class="btn btn-soft" type="button">← Back</button>
+      <button id="go" class="btn btn-big" type="button">Start studying ✦</button>
+    </div>
+    <p class="small center">The room opens full screen. Press <kbd>Esc</kbd> or ✕ any time to pause.</p>
+  </main>
+
+  <!-- ===================== 4. THE STUDY ROOM ===================== -->
+  <main id="screen-room" class="screen room-screen" aria-label="Study room" hidden>
+    <section class="scene" aria-label="Study room">
+      <div class="wall" aria-hidden="true">
+        <div class="bunting"></div>
+        <div class="window"><span class="cloud c1"></span><span class="cloud c2"></span><span class="sun"></span></div>
+        <div class="frame f1">✦</div>
+        <div class="frame f2">♥</div>
+        <div class="clock"><span class="hand h1"></span><span class="hand h2"></span></div>
+        <div class="shelf"><span class="book b1"></span><span class="book b2"></span><span class="book b3"></span><span class="plant"></span></div>
+      </div>
+      <div class="floor" aria-hidden="true"></div>
+
+      <!-- buddies are added here by brain.js -->
+      <div id="stage" class="stage"></div>
+
+      <!-- the big timer board -->
+      <button id="hud" class="hud" type="button" hidden aria-label="Open the timer">
+        <span id="hud-phase" class="hud-phase"></span>
+        <span id="hud-time" class="hud-time"></span>
+        <span id="hud-room" class="hud-room"></span>
+      </button>
+      <p id="scene-hint" class="scene-hint"></p>
+    </section>
+
+    <div class="room-bar">
+      <button id="exit" class="icon-btn" type="button" aria-label="Pause and leave full screen" title="Pause (Esc)">✕</button>
+      <button id="music-btn" class="icon-btn" type="button" aria-pressed="false" aria-label="Music" title="Music on / off"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg></button>
+    </div>
+
+    <form id="quick-chat" class="quick-chat" hidden>
+      <label for="quick-text" class="sr-only">Say something to the room</label>
+      <input id="quick-text" maxlength="140" placeholder="Say something nice…" autocomplete="off">
+      <button class="btn btn-small" type="submit">Send</button>
+    </form>
+  </main>
+
+  <!-- paused card -->
+  <div id="paused" class="overlay" hidden>
+    <div class="card dialog" role="dialog" aria-modal="true" aria-labelledby="paused-title">
+      <p class="dialog-icon" aria-hidden="true"><svg class="ic"><use href="#i-pause"/></svg></p>
+      <h2 id="paused-title">Paused</h2>
+      <p id="paused-time" class="paused-time"></p>
+      <p id="paused-note" class="small"></p>
+      <div class="dialog-buttons">
+        <button id="resume" class="btn" type="button">Resume</button>
+        <button id="change-timer" class="btn btn-soft" type="button">Change timer</button>
+        <button id="end" class="btn btn-soft" type="button">End session</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- rest time / break over -->
+  <div id="popup" class="overlay" hidden>
+    <div class="card dialog popup" role="alertdialog" aria-modal="true" aria-labelledby="popup-title" aria-describedby="popup-body">
+      <canvas id="popup-buddy" width="150" height="150" aria-hidden="true"></canvas>
+      <h2 id="popup-title"></h2>
+      <p id="popup-body"></p>
+      <p id="popup-tip" class="tip with-ic"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg><span id="popup-tip-text"></span></p>
+      <div class="dialog-buttons">
+        <button id="popup-ok" class="btn" type="button"></button>
+        <button id="popup-alt" class="btn btn-soft" type="button"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ☰ MENU ===================== -->
+  <div id="drawer-shade" class="drawer-shade" hidden></div>
+  <aside id="drawer" class="drawer" aria-label="Menu" hidden>
+    <div class="drawer-head">
+      <button id="drawer-back" class="icon-btn small-icon" type="button" aria-label="Back to the menu" hidden>←</button>
+      <h2 id="drawer-title">Menu</h2>
+      <button id="drawer-close" class="icon-btn small-icon" type="button" aria-label="Close menu">✕</button>
+    </div>
+
+    <nav id="drawer-menu" class="drawer-menu">
+      <button type="button" data-sec="room"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg> Room <small id="menu-room-note"></small></button>
+      <button type="button" data-sec="timer"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> Timer</button>
+      <button type="button" data-sec="buddy"><svg class="ic" aria-hidden="true"><use href="#i-paw"/></svg> My buddy</button>
+      <button type="button" data-sec="music"><svg class="ic" aria-hidden="true"><use href="#i-headphones"/></svg> Music <small id="menu-music-note"></small></button>
+      <button type="button" data-sec="achievements"><svg class="ic" aria-hidden="true"><use href="#i-trophy"/></svg> Achievements <small id="menu-ach-note"></small></button>
+      <button type="button" data-sec="stats"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg> My progress</button>
+      <button type="button" data-sec="account"><svg class="ic" aria-hidden="true"><use href="#i-cloud"/></svg> Account <small id="menu-acc-note"></small></button>
+      <button type="button" data-sec="settings"><svg class="ic" aria-hidden="true"><use href="#i-sliders"/></svg> Settings</button>
+      <button type="button" id="menu-home" class="menu-home"><svg class="ic" aria-hidden="true"><use href="#i-door"/></svg> Back to start</button>
+    </nav>
+
+    <!-- ROOM -->
+    <section id="sec-room" class="drawer-sec" hidden>
+      <div id="room-none">
+        <p>Make a room and send your friends the invite link. Everyone's buddies hang out together and share one timer.</p>
+        <button id="create" class="btn" type="button">Create a room</button>
+        <form id="join-form" class="row">
+          <label for="join-code" class="sr-only">Room code</label>
+          <input id="join-code" maxlength="6" placeholder="Room code" autocomplete="off" spellcheck="false">
+          <button class="btn btn-soft" type="submit">Join</button>
+        </form>
+      </div>
+      <div id="room-in" hidden>
+        <div class="room-code">
+          <div>
+            <p class="small">Room code</p>
+            <p id="room-code" class="code">------</p>
+          </div>
+          <div class="stack">
+            <button id="copy-link" class="btn btn-small" type="button">Copy invite link</button>
+            <button id="copy" class="btn btn-soft btn-small" type="button">Copy code</button>
+            <button id="leave" class="btn btn-soft btn-small" type="button">Leave room</button>
+          </div>
+        </div>
+        <h3>Who's here <span id="member-count" class="small"></span></h3>
+        <ul id="members" class="members"></ul>
+        <h3>Chat</h3>
+        <div id="chat" class="chat" aria-live="polite"></div>
+        <form id="chat-form" class="row">
+          <label for="chat-text" class="sr-only">Message</label>
+          <input id="chat-text" maxlength="140" placeholder="Say something nice…" autocomplete="off">
+          <button class="btn btn-small" type="submit">Send</button>
+        </form>
+      </div>
+      <p id="room-error" class="error" role="alert" hidden></p>
+    </section>
+
+    <!-- TIMER -->
+    <section id="sec-timer" class="drawer-sec" hidden>
+      <div class="timer-card">
+        <p id="timer-scope" class="small"></p>
+        <p id="timer-phase" class="timer-phase">Ready</p>
+        <p id="timer-time" class="timer-time">25:00</p>
+        <p id="timer-round" class="small"></p>
+        <div class="timer-buttons">
+          <button id="t-start" class="btn" type="button">Start</button>
+          <button id="t-pause" class="btn btn-soft" type="button">Pause</button>
+          <button id="t-skip" class="btn btn-soft" type="button">Skip</button>
+          <button id="t-reset" class="btn btn-soft" type="button">Reset</button>
+        </div>
+        <p id="timer-note" class="small"></p>
+      </div>
+      <h3>Session lengths</h3>
+      <form id="lengths" class="lengths">
+        <label>Focus <span class="small">(min)</span><input id="focus-min" type="number" min="1" max="180" step="1"></label>
+        <label>Rest <span class="small">(min)</span><input id="break-min" type="number" min="1" max="60" step="1"></label>
+        <button class="btn btn-soft" type="submit">Save lengths</button>
+      </form>
+      <p id="lengths-note" class="small"></p>
+    </section>
+
+    <!-- MY BUDDY (the editor is moved in here) -->
+    <section id="sec-buddy" class="drawer-sec" hidden></section>
+
+    <!-- MUSIC -->
+    <section id="sec-music" class="drawer-sec" hidden>
+      <h3 class="first">Calm sounds</h3>
+      <p class="small">Made right in your browser. No ads, no accounts.</p>
+      <div id="tracks" class="tracks"></div>
+      <label for="volume" class="field-label">Volume</label>
+      <input id="volume" type="range" min="0" max="100" step="1">
+      <button id="music-stop" class="btn btn-soft btn-small" type="button">Stop calm sounds</button>
+
+      <h3>Your own music</h3>
+      <p class="small">Paste a YouTube or Spotify link: a song, playlist, album or live stream.</p>
+      <form id="own-form" class="row">
+        <label for="own-link" class="sr-only">YouTube or Spotify link</label>
+        <input id="own-link" type="text" inputmode="url" placeholder="Paste a link…" autocomplete="off" spellcheck="false">
+        <button class="btn btn-small" type="submit">Play</button>
+      </form>
+      <p id="own-msg" class="small" role="status"></p>
+      <div id="own-recent" class="recent"></div>
+      <div class="note-card">
+        <p class="with-ic"><svg class="ic" aria-hidden="true"><use href="#i-headphones"/></svg><strong>Good to know</strong></p>
+        <p class="small"><strong>YouTube</strong> plays full songs for everyone (it may show ads) and pauses when you pause the timer.</p>
+        <p class="small"><strong>Spotify</strong> plays full songs only if you're logged in at spotify.com in this browser on a computer. Otherwise it plays 30-second previews. Use the player's own button to pause it.</p>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="sec-achievements" class="drawer-sec" hidden>
+      <p id="ach-count" class="small"></p>
+      <ul id="badges" class="badges"></ul>
+    </section>
+
+    <!-- STATS -->
+    <section id="sec-stats" class="drawer-sec" hidden>
+      <div class="stat-grid">
+        <div class="stat"><span id="st-streak" class="stat-num">0</span><span class="small">day streak</span></div>
+        <div class="stat"><span id="st-today" class="stat-num">0</span><span class="small">minutes today</span></div>
+        <div class="stat"><span id="st-total" class="stat-num">0</span><span class="small">hours in total</span></div>
+        <div class="stat"><span id="st-sessions" class="stat-num">0</span><span class="small">sessions done</span></div>
+      </div>
+      <h3>Today's goal</h3>
+      <div id="goal-dots" class="goal-dots"></div>
+      <p id="goal-text" class="small"></p>
+      <label for="goal" class="small">Sessions per day</label>
+      <select id="goal"></select>
+      <h3>This week</h3>
+      <div id="week" class="week" role="img"></div>
+    </section>
+
+    <!-- ACCOUNT (optional) -->
+    <section id="sec-account" class="drawer-sec" hidden>
+      <div id="acc-off" hidden>
+        <p>Accounts aren't switched on for this site. Your progress is saved in this browser.</p>
+      </div>
+      <div id="acc-guest" hidden>
+        <p><strong>Save your progress to the cloud</strong> and keep your streak, achievements and buddy on every device.</p>
+        <button id="acc-google" class="btn" type="button">Continue with Google</button>
+        <p class="small acc-or">or get a sign-in link by email</p>
+        <form id="acc-email-form" class="row" novalidate>
+          <label for="acc-email" class="sr-only">Email address</label>
+          <input id="acc-email" type="email" autocomplete="email" placeholder="you@example.com">
+          <button class="btn btn-soft btn-small" type="submit">Send link</button>
+        </form>
+        <p id="acc-msg" class="small" role="status"></p>
+        <p class="small">No password needed. Signing in is optional: as a guest, everything still works and is saved in this browser.</p>
+      </div>
+      <div id="acc-in" hidden>
+        <div class="acc-card">
+          <svg class="ic" aria-hidden="true"><use href="#i-cloud"/></svg>
+          <div><strong id="acc-name"></strong><span id="acc-mail" class="small"></span></div>
+        </div>
+        <p id="acc-sync" class="small sync-line" role="status"></p>
+        <div class="row">
+          <button id="acc-sync-now" class="btn btn-soft btn-small" type="button">Sync now</button>
+          <button id="acc-out" class="btn btn-soft btn-small" type="button">Sign out</button>
+        </div>
+      </div>
+      <details class="privacy">
+        <summary>What's saved and why</summary>
+        <p class="small">When you sign in, Pomodoodle saves: your email address (to sign you in), your buddy and name, your timer and reminder settings, and your study progress (sessions and minutes per day, streaks, achievements).</p>
+        <p class="small">It's only used to sync your progress between your devices. It's never sold or shared, and there are no ads or trackers. Chat messages and rooms are never saved. Sign-in is handled by Supabase (and Google, if you choose it).</p>
+        <p class="small">You can delete your cloud data any time. Progress saved in this browser stays here until you clear your browser data.</p>
+        <button id="acc-delete" class="btn btn-soft btn-small danger" type="button" hidden>Delete my cloud data</button>
+      </details>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="sec-settings" class="drawer-sec" hidden>
+      <form id="settings-form" class="settings">
+        <label for="water">Water reminder</label>
+        <select id="water">
+          <option value="0">Off</option>
+          <option value="30">Every 30 minutes</option>
+          <option value="45">Every 45 minutes</option>
+          <option value="60">Every hour</option>
+          <option value="90">Every 1.5 hours</option>
+        </select>
+        <label class="check"><input id="chime" type="checkbox"> Play a chime when a session ends</label>
+        <label class="check"><input id="sleep-mode" type="checkbox"> Buddy falls asleep late at night</label>
+        <div class="row">
+          <label for="sleep-from" class="small">from</label>
+          <select id="sleep-from"></select>
+          <label for="sleep-to" class="small">to</label>
+          <select id="sleep-to"></select>
+        </div>
+        <button class="btn" type="submit">Save settings</button>
+        <p id="settings-saved" class="small" role="status"></p>
+      </form>
+      <h3>Notifications</h3>
+      <p class="small">Get a pop-up when a session ends, even if this tab is in the background.</p>
+      <div class="row">
+        <button id="notify-on" class="btn btn-soft" type="button">Turn on notifications</button>
+        <span id="notify-state" class="small"></span>
+      </div>
+    </section>
+  </aside>
+
+  <!-- your own music: small player in the corner -->
+  <div id="mini" class="mini" hidden>
+    <div class="mini-head">
+      <svg class="ic" aria-hidden="true"><use href="#i-note"/></svg>
+      <span id="mini-title">Your music</span>
+      <button id="mini-size" class="mini-btn" type="button" aria-label="Hide player" aria-expanded="true">–</button>
+      <button id="mini-close" class="mini-btn" type="button" aria-label="Close player">✕</button>
+    </div>
+    <div id="mini-body" class="mini-body"></div>
+  </div>
+
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="migrate.js"></script>
+  <script src="shared/timer.js"></script>
+  <script src="shared/sprites.js"></script>
+  <script src="progress.js"></script>
+  <script src="music.js"></script>
+  <script src="mymusic.js"></script>
+  <script src="web-api.js"></script>
+  <script src="config.js"></script>
+  <script src="cloud.js"></script>
+  <script src="brain.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
